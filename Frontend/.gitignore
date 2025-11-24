@@ -12,8 +12,9 @@ dist
 dist-ssr
 *.local
 node_modules/
+*.env
 .env
-.env.example
+.env.*
 .DS_Store
 
 # Editor directories and files
