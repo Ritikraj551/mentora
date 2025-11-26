@@ -47,7 +47,13 @@ function Nav() {
               className="w-[50px] h-[50px] fill-black cursor-pointer"
             />
           )}
-          {userData && (
+          {userData?.photoUrl ? (
+            <img
+              onClick={() => setShow((prev) => !prev)}
+              src={userData?.photoUrl}
+              className="w-[50px] h-[50px] rounded-full text-white flex items-center justify-center text-[20px] border-2 bg-black border-white cursor-pointer"
+            />
+          ) : (
             <div
               onClick={() => setShow((prev) => !prev)}
               className="w-[50px] h-[50px] rounded-full text-white flex items-center justify-center text-[20px] border-2 bg-black border-white cursor-pointer"
@@ -89,9 +95,11 @@ function Nav() {
             </div>
           )}
         </div>
+
+        {/* Mobile menu */}
         <RxHamburgerMenu
           onClick={() => setShowHam((prev) => !prev)}
-          className="w-[35px] h-[35px] lg:hidden fill-white cursor-pointer"
+          className="w-[35px] h-[35px] lg:hidden text-white cursor-pointer"
         />
         <div
           className={`fixed top-0 left-0 w-screen h-screen bg-[#000000d6] flex items-center justify-center flex-col gap-5 z-10 lg:hidden ${
@@ -107,8 +115,16 @@ function Nav() {
           {!userData && (
             <IoPersonCircle className="w-[50px] h-[50px] fill-black cursor-pointer" />
           )}
-          {userData && (
-            <div className="w-[50px] h-[50px] rounded-full text-white flex items-center justify-center text-[20px] border-2 bg-black border-white cursor-pointer">
+          {userData?.photoUrl ? (
+            <img
+              src={userData?.photoUrl}
+              className="w-[50px] h-[50px] rounded-full text-white flex items-center justify-center text-[20px] border-2 bg-black border-white cursor-pointer"
+            />
+          ) : (
+            <div
+              onClick={() => setShow((prev) => !prev)}
+              className="w-[50px] h-[50px] rounded-full text-white flex items-center justify-center text-[20px] border-2 bg-black border-white cursor-pointer"
+            >
               {userData?.name?.slice(0, 1).toUpperCase()}
             </div>
           )}
