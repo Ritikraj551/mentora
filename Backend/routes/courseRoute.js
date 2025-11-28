@@ -18,12 +18,12 @@ courseRouter.post("/create", userAuth, createCourse);
 courseRouter.get("/published", getPublishedCourses);
 courseRouter.get("/creator", userAuth, getCreatorCourses);
 courseRouter.put(
-  "/edit/:courseId",
+  "/editcourse/:courseId",
   userAuth,
   upload.single("thumbnail"),
   editCourse
 );
-courseRouter.get("/:courseId", userAuth, getCourseById);
-courseRouter.delete("/:courseId", userAuth, removeCourse);
+courseRouter.get("/getcourse/:courseId", userAuth, getCourseById);
+courseRouter.delete("/remove/:courseId", userAuth, removeCourse);
 
 module.exports = courseRouter;

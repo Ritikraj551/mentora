@@ -3,6 +3,7 @@ import Nav from "../component/Nav";
 import { SiViaplay } from "react-icons/si";
 import Logos from "../component/Logos";
 import ExploreCourses from "../component/ExploreCourses";
+import CardPage from "../component/CardPage";
 
 const Home = () => {
   return (
@@ -41,6 +42,7 @@ const Home = () => {
       </div>
       <Logos />
       <ExploreCourses/>
+      <CardPage/>
     </div>
   );
 };
