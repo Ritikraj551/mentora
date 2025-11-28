@@ -15,6 +15,7 @@ import CreateCourses from "./pages/educator/CreateCourses";
 import getCreatorCourse from "./customHooks/getCreatorCourse";
 import EditCourse from "./pages/educator/EditCourse";
 import getPublishedCourse from "./customHooks/getPublishedCourse";
+import AllCourses from "./pages/AllCourses";
 
 export const serverUrl = "http://localhost:8000";
 function App() {
@@ -84,6 +85,10 @@ function App() {
               <Navigate to={"/signup"} />
             )
           }
+        />
+        <Route
+          path="/allcourses"
+          element={userData ? <AllCourses /> : <Navigate to={"/signup"} />}
         />
       </Routes>
     </>

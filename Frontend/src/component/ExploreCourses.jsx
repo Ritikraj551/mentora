@@ -8,8 +8,10 @@ import { AiFillOpenAI } from "react-icons/ai";
 import { SiGoogledataproc } from "react-icons/si";
 import { BsClipboard2DataFill } from "react-icons/bs";
 import { FaTools } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 function ExploreCourses() {
+  const navigate = useNavigate();
   return (
     <div className="w-screen min-h-[50vh] lg:h-[50vh] flex flex-col lg:flex-row items-center justify-center gap-4 px-[30px]">
       {/* left/top div */}
@@ -22,7 +24,10 @@ function ExploreCourses() {
           incidunt laudantium molestias nemo ad vel? Dolorum commodi nihil
           numquam officiis.
         </p>
-        <button className="cursor-pointer px-5 py-2.5 border-2 bg-black border-white text-white rounded-[10px] text-[18px] font-light flex gap-2 mt-10">
+        <button
+          onClick={() => navigate("/allcourses")}
+          className="cursor-pointer px-5 py-2.5 border-2 bg-black border-white text-white rounded-[10px] text-[18px] font-light flex gap-2 mt-10"
+        >
           Explore Courses <SiViaplay className="w-[30px] h-[30px] fill-white" />
         </button>
       </div>
