@@ -9,6 +9,7 @@ import { setUserData } from "../redux/userSlice";
 import { useDispatch } from "react-redux";
 import { auth, provider } from "../../utils/firebase";
 import { signInWithPopup } from "firebase/auth";
+import { FaArrowLeftLong } from "react-icons/fa6";
 
 function Login() {
   const [show, setShow] = useState(false);
@@ -63,8 +64,12 @@ function Login() {
     <div className="bg-[#dddbdb] w-screen h-screen flex items-center justify-center">
       <form
         onSubmit={(e) => e.preventDefault()}
-        className="w-[90%] md:w-200 h-150 bg-white shadow-xl rounded-2xl flex"
+        className="relative w-[90%] md:w-200 h-150 bg-white shadow-xl rounded-2xl flex"
       >
+        <FaArrowLeftLong
+          onClick={() => navigate("/")}
+          className="absolute top-[3%] md:top-[6%] left-[5%] w-[22px] h-[22px] cursor-pointer"
+        />
         {/* Left div */}
         <div className="md:w-[50%] w-full h-full flex flex-col items-center justify-center gap-3">
           <div>
