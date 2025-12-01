@@ -10,6 +10,7 @@ import axios from "axios";
 import { serverUrl } from "../App";
 import Card from "../component/Card";
 import { toast } from "react-toastify";
+import { ClipLoader } from "react-spinners";
 
 function ViewCourse() {
   const navigate = useNavigate();
@@ -22,6 +23,10 @@ function ViewCourse() {
   const [creatorCourses, setCreatorCourses] = useState(null);
   const { userData } = useSelector((state) => state.user);
   const [isEnrolled, setIsEnrolled] = useState(false);
+  const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const fetchCourseData = async () => {
     courseData.map((course) => {
       if (course._id === courseId) {
@@ -119,6 +124,38 @@ function ViewCourse() {
     }
   };
 
+  const handleReview = async () => {
+    setLoading(true);
+    try {
+      const result = await axios.post(
+        serverUrl + "/api/review/createreview",
+        { rating, comment, courseId },
+        { withCredentials: true }
+      );
+      setLoading(false);
+      toast.success("Review Added");
+      console.log(result.data);
+      setRating(0);
+      setComment("");
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+      toast.error(error.response.data.message);
+      setRating(0);
+      setComment("");
+    }
+  };
+
+  const calculateAvgReview = (reviews) => {
+    if (!reviews || reviews.lenght === 0) {
+      return 0;
+    }
+    const total = reviews.reduce((sum, review) => sum + review.rating, 0);
+    return (total / reviews.length).toFixed(1);
+  };
+
+  const avgRating = calculateAvgReview(selectedCourse?.reviews);
+
   return (
     <div className="min-h-screen bg-gray-50 p-6">
       <div className="max-w-6xl mx-auto bg-white shadow-md rounded-xl p-6 space-y-6 relative">
@@ -149,7 +186,8 @@ function ViewCourse() {
             <div className="flex items-start flex-col justify-between">
               <div className="flex text-yellow-500 font-medium gap-2">
                 <span className="flex items-center justify-start gap-1">
-                  <FaStar />5
+                  <FaStar />
+                  {avgRating}
                 </span>
                 <span className="text-gray-400">(1200 Reviews)</span>
               </div>
@@ -254,16 +292,32 @@ function ViewCourse() {
           <div className="mb-4">
             <div className="flex gap-1 mb-2">
               {[1, 2, 3, 4, 5].map((star) => (
-                <FaStar key={star} className="fill-gray-300" />
+                <FaStar
+                  key={star}
+                  onClick={() => setRating(star)}
+                  className={
+                    star <= rating ? "fill-amber-300" : "fill-gray-300"
+                  }
+                />
               ))}
             </div>
             <textarea
+              onChange={(e) => setComment(e.target.value)}
+              value={comment}
               rows={3}
               placeholder="Write your reviews here..."
               className="w-full border border-gray-300 rounded-lg p-2"
             />
-            <button className="bg-black text-white mt-3 px-4 py-2 rounded hover:bg-gray-800">
-              Submit Review
+            <button
+              disabled={loading}
+              onClick={handleReview}
+              className="bg-black text-white mt-3 px-4 py-2 rounded hover:bg-gray-800"
+            >
+              {loading ? (
+                <ClipLoader size={30} color="white" />
+              ) : (
+                "Submit Review"
+              )}
             </button>
           </div>
         </div>
