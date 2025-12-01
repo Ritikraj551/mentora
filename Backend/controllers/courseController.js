@@ -19,9 +19,11 @@ const createCourse = async (req, res) => {
       });
     }
 
-    let thumbnailUrl = "";
+    let thumbnailUrl = ""; // default empty
     if (req.file) {
-      thumbnailUrl = await uploadOnCloudinary(req.file.path);
+      const uploaded = await uploadOnCloudinary(req.file.path);
+      console.log("Uploaded thumbnail URL:", uploaded); // debug log
+      thumbnailUrl = uploaded; // use the string URL directly
     }
 
     const course = await Course.create({
@@ -35,7 +37,7 @@ const createCourse = async (req, res) => {
       success: true,
       message: "Course created successfully!",
       course,
-      thumbnailUrl, // For debugging
+      thumbnailUrl, // for debugging
     });
   } catch (error) {
     return res.status(500).json({
@@ -101,7 +103,6 @@ const getCreatorCourses = async (req, res) => {
 const editCourse = async (req, res) => {
   try {
     const { courseId } = req.params;
-
     const {
       title,
       subTitle,
@@ -113,7 +114,6 @@ const editCourse = async (req, res) => {
     } = req.body;
 
     let course = await Course.findById(courseId);
-
     if (!course) {
       return res.status(404).json({
         success: false,
@@ -128,19 +128,20 @@ const editCourse = async (req, res) => {
       });
     }
 
-    let thumbnail = course.thumbnail; // keep existing thumbnail by default
+    let thumbnail = course.thumbnail; // keep existing thumbnail
     if (req.file) {
       const uploaded = await uploadOnCloudinary(req.file.path);
-      thumbnail = uploaded?.url || uploaded?.secure_url;
+      console.log("Uploaded thumbnail URL:", uploaded); // debug log
+      thumbnail = uploaded; // directly assign the string URL
     }
 
-    let updateData = {
+    const updateData = {
       title,
       subTitle,
       description,
       category,
       level,
-      isPublished: isPublished === "true" || isPublished === true, // handle both string & boolean
+      isPublished: isPublished === "true" || isPublished === true,
       price,
       thumbnail,
     };

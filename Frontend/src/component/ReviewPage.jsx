@@ -6,14 +6,13 @@ function ReviewPage() {
   const { reviewData } = useSelector((state) => state.review);
   const [latestReview, setLatestReview] = useState([]);
 
-useEffect(() => {
-  if (Array.isArray(reviewData)) {
-    setLatestReview(reviewData.slice(0, 6));
-  } else {
-    setLatestReview([]);
-  }
-}, [reviewData]);
-
+  useEffect(() => {
+    if (Array.isArray(reviewData)) {
+      setLatestReview(reviewData.slice(0, 6));
+    } else {
+      setLatestReview([]);
+    }
+  }, [reviewData]);
 
   return (
     <div className="flex items-center justify-center flex-col">
@@ -29,13 +28,13 @@ useEffect(() => {
         {latestReview?.length > 0 ? (
           latestReview.map((review, index) => (
             <ReviewCard
-              key={index}
+              key={review._id || index}
               comment={review.comment}
               rating={review.rating}
-              photoUrl={review.user?.photoUrl || "/assets/empty.jpg"}
-              courseTitle={review.course?.title || "Course"}
-              description={review.user?.description || ""}
-              name={review.user?.name || "Anonymous User"}
+              photoUrl={review.photoUrl || "/assets/empty.jpg"}
+              courseTitle={review.courseTitle || "Course"}
+              description={review.description || ""}
+              name={review.name || "Anonymous User"}
             />
           ))
         ) : (

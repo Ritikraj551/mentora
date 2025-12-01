@@ -64,15 +64,28 @@ const createReview = async (req, res) => {
 const getReviews = async (req, res) => {
   try {
     const reviews = await Review.find({})
-      .populate("user", "name ,photoUrl, description")
-      .populate("course", "thumbnail")
-      .sort({ reviewedAt: -1 })
+      .populate("user", "name photoUrl description") // populate user fields
+      .populate("course", "title thumbnail") // populate course title & thumbnail
+      .sort({ createdAt: -1 }) // sort newest first
       .lean();
+
+    // Normalize shape for frontend
+    const normalized = reviews.map((r) => ({
+      _id: r._id,
+      comment: r.comments, // backend uses 'comments' => frontend expects 'comment'
+      rating: r.rating,
+      photoUrl: r.user?.photoUrl || "/assets/empty.jpg",
+      name: r.user?.name || "Anonymous User",
+      description: r.user?.description || "",
+      courseTitle: r.course?.title || "",
+      courseThumbnail: r.course?.thumbnail || "",
+      createdAt: r.createdAt,
+    }));
 
     return res.status(200).json({
       message: "Reviews fetched successfully",
-      count: reviews.length,
-      reviews,
+      count: normalized.length,
+      reviews: normalized,
     });
   } catch (error) {
     return res.status(500).json({

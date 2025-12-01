@@ -22,17 +22,17 @@ function Nav() {
         withCredentials: true,
       });
       dispatch(setUserData(null));
-      console.log(result.data);
       toast.success("Logout Successful");
     } catch (error) {
       console.log(error);
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data?.message || "Logout Failed");
     }
   };
 
   return (
     <div>
       <div className="w-full h-[70px] fixed top-0 px-5 py-2.5 flex items-center justify-between bg-[#00000047] z-10">
+        {/* Logo */}
         <div className="lg:w-[20%] w-[40%] lg:pl-[50px]">
           <img
             src="/assets/logo.jpg"
@@ -40,27 +40,35 @@ function Nav() {
             className="w-[60px] rounded-[5px] border-2 border-white"
           />
         </div>
+
+        {/* Desktop Menu */}
         <div className="hidden w-[30%] lg:flex items-center justify-center gap-4">
+          {/* Logged OUT user icon */}
           {!userData && (
             <IoPersonCircle
               onClick={() => setShow((prev) => !prev)}
               className="w-[50px] h-[50px] fill-black cursor-pointer"
             />
           )}
-          {userData?.photoUrl ? (
-            <img
-              onClick={() => setShow((prev) => !prev)}
-              src={userData?.photoUrl}
-              className="w-[50px] h-[50px] rounded-full text-white flex items-center justify-center text-[20px] border-2 bg-black border-white cursor-pointer"
-            />
-          ) : (
-            <div
-              onClick={() => setShow((prev) => !prev)}
-              className="w-[50px] h-[50px] rounded-full text-white flex items-center justify-center text-[20px] border-2 bg-black border-white cursor-pointer"
-            >
-              {userData?.name?.slice(0, 1).toUpperCase()}
-            </div>
-          )}
+
+          {/* Logged IN profile picture / initial */}
+          {userData &&
+            (userData.photoUrl ? (
+              <img
+                onClick={() => setShow((prev) => !prev)}
+                src={userData.photoUrl}
+                className="w-[50px] h-[50px] rounded-full border-2 bg-black border-white cursor-pointer"
+              />
+            ) : (
+              <div
+                onClick={() => setShow((prev) => !prev)}
+                className="w-[50px] h-[50px] rounded-full text-white flex items-center justify-center text-[20px] border-2 bg-black border-white cursor-pointer"
+              >
+                {userData.name?.slice(0, 1).toUpperCase()}
+              </div>
+            ))}
+
+          {/* Educator Dashboard */}
           {userData?.role === "educator" && (
             <div
               onClick={() => navigate("/dashboard")}
@@ -69,6 +77,8 @@ function Nav() {
               Dashboard
             </div>
           )}
+
+          {/* Login / Logout */}
           {!userData ? (
             <span
               onClick={() => navigate("/login")}
@@ -84,8 +94,10 @@ function Nav() {
               Logout
             </span>
           )}
+
+          {/* Dropdown on profile click */}
           {show && (
-            <div className="absolute top-[110%] right-[15%] flex items-center flex-col justify-center gap-2 text-[16px] rounded-md bg-white px-[15px] py-2.5 border-2 border-black hover:border-white hover:text-white cursor-pointer hover:bg-black">
+            <div className="absolute top-[110%] right-[15%] flex items-center flex-col justify-center gap-2 text-[16px] rounded-md bg-white px-[15px] py-2.5 border-2 border-black cursor-pointer">
               <span
                 onClick={() => navigate("/profile")}
                 className="bg-black text-white px-[30px] py-2.5 rounded-2xl hover:bg-gray-600"
@@ -102,11 +114,13 @@ function Nav() {
           )}
         </div>
 
-        {/* Mobile menu */}
+        {/* Mobile Menu Hamburger */}
         <RxHamburgerMenu
           onClick={() => setShowHam((prev) => !prev)}
           className="w-[35px] h-[35px] lg:hidden text-white cursor-pointer"
         />
+
+        {/* Mobile Fullscreen Menu */}
         <div
           className={`fixed top-0 left-0 w-screen h-screen bg-[#000000d6] flex items-center justify-center flex-col gap-5 z-10 lg:hidden ${
             showHam
@@ -118,34 +132,39 @@ function Nav() {
             onClick={() => setShowHam((prev) => !prev)}
             className="w-[35px] h-[35px] fill-white absolute top-5 right-[4%]"
           />
+
+          {/* Mobile: Logged OUT user icon */}
           {!userData && (
             <IoPersonCircle className="w-[50px] h-[50px] fill-black cursor-pointer" />
           )}
-          {userData?.photoUrl ? (
-            <img
-              src={userData?.photoUrl}
-              className="w-[50px] h-[50px] rounded-full text-white flex items-center justify-center text-[20px] border-2 bg-black border-white cursor-pointer"
-            />
-          ) : (
-            <div
-              onClick={() => setShow((prev) => !prev)}
-              className="w-[50px] h-[50px] rounded-full text-white flex items-center justify-center text-[20px] border-2 bg-black border-white cursor-pointer"
-            >
-              {userData?.name?.slice(0, 1).toUpperCase()}
-            </div>
-          )}
+
+          {/* Mobile: Logged IN profile */}
+          {userData &&
+            (userData.photoUrl ? (
+              <img
+                src={userData.photoUrl}
+                className="w-[50px] h-[50px] rounded-full border-2 bg-black border-white cursor-pointer"
+              />
+            ) : (
+              <div className="w-[50px] h-[50px] rounded-full text-white flex items-center justify-center text-[20px] border-2 bg-black border-white cursor-pointer">
+                {userData.name?.slice(0, 1).toUpperCase()}
+              </div>
+            ))}
+
           <div
             onClick={() => navigate("/profile")}
             className="w-[200px] h-20 flex items-center justify-center border-2 border-white text-white bg-black rounded-[10px] text-[18px] font-light cursor-pointer"
           >
             My Profile
           </div>
+
           <div
             onClick={() => navigate("/mycourses")}
             className="w-[200px] h-20 flex items-center justify-center border-2 border-white text-white bg-black rounded-[10px] text-[18px] font-light cursor-pointer"
           >
             My Courses
           </div>
+
           {userData?.role === "educator" && (
             <div
               onClick={() => navigate("/dashboard")}
@@ -154,6 +173,7 @@ function Nav() {
               Dashboard
             </div>
           )}
+
           {!userData ? (
             <span
               onClick={() => navigate("/login")}

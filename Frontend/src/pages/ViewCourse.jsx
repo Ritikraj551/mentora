@@ -133,9 +133,10 @@ function ViewCourse() {
     try {
       const result = await axios.post(
         serverUrl + "/api/review/createreview",
-        { rating, comment, courseId },
+        { rating, comments: comment, courseId },
         { withCredentials: true }
       );
+
       setLoading(false);
       toast.success("Review Added");
       console.log(result.data);
