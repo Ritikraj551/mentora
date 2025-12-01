@@ -64,7 +64,10 @@ function AllCourses() {
           onSubmit={(e) => e.preventDefault()}
           className="space-y-4 tetx-sm bg-gray-600 border-white text-white border p-5 rounded-2xl"
         >
-          <button className="px-2.5 py-2.5 bg-black text-white rounded-[10px] text-[15px] font-light flex items-center justify-center gap-2 cursor-pointer">
+          <button
+            onClick={() => navigate("/search")}
+            className="px-2.5 py-2.5 bg-black text-white rounded-[10px] text-[15px] font-light flex items-center justify-center gap-2 cursor-pointer"
+          >
             Search with AI{" "}
             <img
               src="/assets/SearchAi.png"

@@ -33,7 +33,10 @@ const Home = () => {
             View All Courses
             <SiViaplay className="w-[30px] h-[30px] lg:fill-white fill-black" />
           </button>
-          <button className="px-5 py-2.5 lg:bg-white bg-black border-2 lg:border-white border-black lg:text-black text-white rounded-[10px] text-[18px] font-light flex gap-2 cursor-pointer">
+          <button
+            onClick={() => navigate("/search")}
+            className="px-5 py-2.5 lg:bg-white bg-black border-2 lg:border-white border-black lg:text-black text-white rounded-[10px] text-[18px] font-light flex gap-2 cursor-pointer"
+          >
             Search With AI
             <img
               src="/assets/ai.png"
@@ -51,9 +54,9 @@ const Home = () => {
       <Logos />
       <ExploreCourses />
       <CardPage />
-      <About/>
-      <ReviewPage/>
-      <Footer/>
+      <About />
+      <ReviewPage />
+      <Footer />
     </div>
   );
 };
