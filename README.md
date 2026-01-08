@@ -1,6 +1,6 @@
 # Learnix
 
-Professional Learning Management System (formerly "Mentora")
+Professional Learning Management System
 
 Learnix is a full-stack Learning Management System (LMS) built with the MERN stack. It provides features for creators and learners including course management, lecture uploads, payments (Razorpay), reviews, and Google authentication.
 
