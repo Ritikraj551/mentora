@@ -86,26 +86,8 @@ npm install
 npm run dev
 ```
 
-## Notes about renaming
-
-Project name strings were updated to `Learnix` across source files where appropriate. I skipped editing environment files and external references (for example, URLs pointing to third-party repos) to avoid breaking secrets or external links.
-
 ## Contributing
 
 1. Fork the repository
 2. Create a feature branch
 3. Open a pull request with a clear description of changes
-
-## License
-
-Specify your license here (e.g., MIT) or include a `LICENSE` file.
-
----
-
-If you'd like I can also:
-
-- Update other README files in `Backend/` and `Frontend/` to match this professional style
-- Create a `README.example.env` file listing required environment variables
-- Commit the changes to a git branch and open a PR locally
-
-Tell me which of the above you'd like next.
